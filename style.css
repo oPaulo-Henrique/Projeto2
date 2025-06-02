@@ -1,37 +1,37 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    background: #f0f0f0;
     margin: 0;
     padding: 0;
 }
 .container {
     max-width: 600px;
-    margin: 30px auto;
+    margin: 40px auto;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
 }
-form input, form textarea {
+form input {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
 }
 button {
     padding: 10px 15px;
-    background-color: #4CAF50;
+    background-color: #007BFF;
     border: none;
     color: white;
     cursor: pointer;
 }
-.task {
+.contact {
     border: 1px solid #ccc;
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 5px;
 }
-.task-buttons {
+.contact-buttons {
     margin-top: 10px;
 }
-.task-buttons button {
+.contact-buttons button {
     margin-right: 10px;
 }

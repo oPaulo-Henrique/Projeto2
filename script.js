@@ -1,69 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('task-form');
-    const titleInput = document.getElementById('title');
-    const descriptionInput = document.getElementById('description');
-    const taskIdInput = document.getElementById('task-id');
-    const tasksList = document.getElementById('tasks-list');
+    const form = document.getElementById('contact-form');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const contactIdInput = document.getElementById('contact-id');
+    const contactsList = document.getElementById('contacts-list');
 
-    function getTasks() {
-        return JSON.parse(localStorage.getItem('tasks') || '[]');
+    function getContacts() {
+        return JSON.parse(localStorage.getItem('contacts') || '[]');
     }
 
-    function saveTasks(tasks) {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+    function saveContacts(contacts) {
+        localStorage.setItem('contacts', JSON.stringify(contacts));
     }
 
-    function renderTasks() {
-        const tasks = getTasks();
-        tasksList.innerHTML = '';
-        tasks.forEach((task, index) => {
+    function renderContacts() {
+        const contacts = getContacts();
+        contactsList.innerHTML = '';
+        contacts.forEach((contact, index) => {
             const div = document.createElement('div');
-            div.className = 'task';
+            div.className = 'contact';
             div.innerHTML = `
-                <strong>${task.title}</strong>
-                <p>${task.description}</p>
-                <div class="task-buttons">
-                    <button onclick="editTask(${index})">Editar</button>
-                    <button onclick="deleteTask(${index})">Remover</button>
+                <strong>${contact.name}</strong><br>
+                <small>${contact.email}</small><br>
+                <small>${contact.phone}</small>
+                <div class="contact-buttons">
+                    <button onclick="editContact(${index})">Editar</button>
+                    <button onclick="deleteContact(${index})">Remover</button>
                 </div>
             `;
-            tasksList.appendChild(div);
+            contactsList.appendChild(div);
         });
     }
 
-    window.editTask = function(index) {
-        const task = getTasks()[index];
-        titleInput.value = task.title;
-        descriptionInput.value = task.description;
-        taskIdInput.value = index;
+    window.editContact = function(index) {
+        const contact = getContacts()[index];
+        nameInput.value = contact.name;
+        emailInput.value = contact.email;
+        phoneInput.value = contact.phone;
+        contactIdInput.value = index;
     };
 
-    window.deleteTask = function(index) {
-        const tasks = getTasks();
-        tasks.splice(index, 1);
-        saveTasks(tasks);
-        renderTasks();
+    window.deleteContact = function(index) {
+        const contacts = getContacts();
+        contacts.splice(index, 1);
+        saveContacts(contacts);
+        renderContacts();
     };
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const title = titleInput.value.trim();
-        const description = descriptionInput.value.trim();
-        if (!title || !description) {
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        if (!name || !email || !phone) {
             alert('Preencha todos os campos!');
             return;
         }
-        const tasks = getTasks();
-        const id = taskIdInput.value;
+        const contacts = getContacts();
+        const id = contactIdInput.value;
         if (id) {
-            tasks[id] = { title, description };
+            contacts[id] = { name, email, phone };
         } else {
-            tasks.push({ title, description });
+            contacts.push({ name, email, phone });
         }
-        saveTasks(tasks);
-        renderTasks();
+        saveContacts(contacts);
+        renderContacts();
         form.reset();
     });
 
-    renderTasks();
+    renderContacts();
 });

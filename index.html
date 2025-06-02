@@ -2,19 +2,20 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Gerenciador de Tarefas</title>
+    <title>Agenda de Contatos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Gerenciador de Tarefas</h1>
-        <form id="task-form">
-            <input type="hidden" id="task-id">
-            <input type="text" id="title" placeholder="Título" required>
-            <textarea id="description" placeholder="Descrição" required></textarea>
-            <button type="submit">Salvar Tarefa</button>
+        <h1>Agenda de Contatos</h1>
+        <form id="contact-form">
+            <input type="hidden" id="contact-id">
+            <input type="text" id="name" placeholder="Nome" required>
+            <input type="email" id="email" placeholder="E-mail" required>
+            <input type="tel" id="phone" placeholder="Telefone" required>
+            <button type="submit">Salvar Contato</button>
         </form>
-        <div id="tasks-list"></div>
+        <div id="contacts-list"></div>
     </div>
     <script src="script.js"></script>
 </body>
