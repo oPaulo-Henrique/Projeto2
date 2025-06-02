@@ -23,6 +23,9 @@ button {
     color: white;
     cursor: pointer;
 }
+#contacts-list {
+    margin-top: 30px; /* Espaçamento maior entre o formulário e a lista */
+}
 .contact {
     border: 1px solid #ccc;
     padding: 15px;
