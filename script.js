@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const phoneInput = document.getElementById('phone');
     const contactIdInput = document.getElementById('contact-id');
     const contactsList = document.getElementById('contacts-list');
+    const successMessage = document.getElementById('success-message');
 
     function getContacts() {
         return JSON.parse(localStorage.getItem('contacts') || '[]');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderContacts() {
+        if (!contactsList) return;
         const contacts = getContacts();
         contactsList.innerHTML = '';
         contacts.forEach((contact, index) => {
@@ -46,28 +48,35 @@ document.addEventListener('DOMContentLoaded', () => {
         contacts.splice(index, 1);
         saveContacts(contacts);
         renderContacts();
+        alert('Contato removido com sucesso!');
     };
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = nameInput.value.trim();
-        const email = emailInput.value.trim();
-        const phone = phoneInput.value.trim();
-        if (!name || !email || !phone) {
-            alert('Preencha todos os campos!');
-            return;
-        }
-        const contacts = getContacts();
-        const id = contactIdInput.value;
-        if (id) {
-            contacts[id] = { name, email, phone };
-        } else {
-            contacts.push({ name, email, phone });
-        }
-        saveContacts(contacts);
-        renderContacts();
-        form.reset();
-    });
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const phone = phoneInput.value.trim();
+            if (!name || !email || !phone) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            const contacts = getContacts();
+            const id = contactIdInput.value;
+            if (id) {
+                contacts[id] = { name, email, phone };
+            } else {
+                contacts.push({ name, email, phone });
+            }
+            saveContacts(contacts);
+            renderContacts();
+            form.reset();
+            if (successMessage) {
+                successMessage.textContent = 'Contato salvo com sucesso!';
+                setTimeout(() => successMessage.textContent = '', 3000);
+            }
+        });
+    }
 
     renderContacts();
 });

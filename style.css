@@ -4,7 +4,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
 .container {
     max-width: 600px;
     margin: 40px auto;
@@ -13,14 +12,12 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 h1 {
     margin-bottom: 25px;
     font-size: 24px;
     text-align: center;
     color: #333;
 }
-
 form input {
     width: 100%;
     margin-bottom: 15px;
@@ -29,7 +26,6 @@ form input {
     border: 1px solid #ccc;
     border-radius: 6px;
 }
-
 button {
     padding: 10px 16px;
     background-color: #007BFF;
@@ -40,15 +36,12 @@ button {
     cursor: pointer;
     transition: background-color 0.2s;
 }
-
 button:hover {
     background-color: #0056b3;
 }
-
 #contacts-list {
     margin-top: 40px;
 }
-
 .contact {
     border: 1px solid #ddd;
     padding: 15px;
@@ -57,22 +50,25 @@ button:hover {
     background-color: #fafafa;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
-
 .contact strong {
     font-size: 16px;
     color: #222;
 }
-
 .contact small {
     display: block;
     color: #555;
     margin-top: 3px;
 }
-
 .contact-buttons {
     margin-top: 12px;
 }
-
 .contact-buttons button {
     margin-right: 10px;
+}
+.success-message {
+    color: green;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 0;
 }

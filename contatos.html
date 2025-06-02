@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Contatos Cadastrados</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Contatos Cadastrados</h1>
+        <div id="contacts-list"></div>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.html">Voltar para cadastro</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactsList = document.getElementById('contacts-list');
+            const contacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+
+            if (contacts.length === 0) {
+                contactsList.innerHTML = "<p>Nenhum contato cadastrado.</p>";
+                return;
+            }
+
+            contacts.forEach(contact => {
+                const div = document.createElement('div');
+                div.className = 'contact';
+                div.innerHTML = `
+                    <strong>${contact.name}</strong><br>
+                    <small>${contact.email}</small><br>
+                    <small>${contact.phone}</small>
+                `;
+                contactsList.appendChild(div);
+            });
+        });
+    </script>
+</body>
+</html>
