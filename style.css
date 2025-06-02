@@ -4,37 +4,75 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .container {
     max-width: 600px;
     margin: 40px auto;
     background: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+h1 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+}
+
 form input {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
+
 button {
-    padding: 10px 15px;
+    padding: 10px 16px;
     background-color: #007BFF;
     border: none;
     color: white;
-    cursor: pointer;
-}
-#contacts-list {
-    margin-top: 30px; /* Espaçamento maior entre o formulário e a lista */
-}
-.contact {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 10px;
+    font-size: 14px;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#contacts-list {
+    margin-top: 40px;
+}
+
+.contact {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background-color: #fafafa;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.contact strong {
+    font-size: 16px;
+    color: #222;
+}
+
+.contact small {
+    display: block;
+    color: #555;
+    margin-top: 3px;
+}
+
 .contact-buttons {
-    margin-top: 10px;
+    margin-top: 12px;
 }
+
 .contact-buttons button {
     margin-right: 10px;
 }
