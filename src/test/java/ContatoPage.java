@@ -50,8 +50,18 @@ public class ContatoPage {
     public boolean contatoFoiRemovido(String nome) {
         try {
             return wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//strong[contains(text(), '" + nome + "')]")
-            ));
+                By.xpath("//strong[contains(text(), '" + nome + "')]")));
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public boolean alertaEstaPresente(String mensagemEsperada) {
+        try {
+            Alert alerta = wait.until(ExpectedConditions.alertIsPresent());
+            boolean contem = alerta.getText().contains(mensagemEsperada);
+            alerta.accept();
+            return contem;
         } catch (TimeoutException e) {
             return false;
         }
