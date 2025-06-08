@@ -6,7 +6,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.github.javafaker.Faker;
 
 import java.time.Duration;
-import java.util.List;
 
 public class ContatoTest {
     private WebDriver driver;
@@ -46,11 +45,10 @@ public class ContatoTest {
         telefone.sendKeys(telefoneFalso);
         botaoSalvar.click();
 
-        boolean ok = wait.until(
-            ExpectedConditions.textToBePresentInElementLocated(
-                By.id("success-message"), "sucesso"
-            )
-        );
+        boolean ok = wait.until(ExpectedConditions.textToBePresentInElementLocated(
+            By.id("success-message"), "sucesso"
+        ));
+
         Assertions.assertTrue(ok, "Mensagem de sucesso não apareceu");
     }
 
@@ -58,7 +56,7 @@ public class ContatoTest {
     public void deveEditarContatoExistente() {
         driver.get("https://projeto2-seven-sandy.vercel.app/");
 
-        // Cadastrar contato
+        // === Cadastro de contato ===
         WebElement nome = driver.findElement(By.id("name"));
         WebElement email = driver.findElement(By.id("email"));
         WebElement telefone = driver.findElement(By.id("phone"));
@@ -75,17 +73,21 @@ public class ContatoTest {
 
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("success-message"), "sucesso"));
 
-        // Ir para a tela de contatos
+        // === Navegar para tela de contatos ===
         driver.findElement(By.linkText("Ver contatos cadastrados")).click();
 
-        // Editar o primeiro contato
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Editar']"))).click();
+        // === Clicar no botão Editar do primeiro contato ===
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//div[@class='contact-buttons']/button[contains(text(), 'Editar')]")
+        )).click();
 
+        // === Editar o nome ===
         WebElement campoNome = driver.findElement(By.id("name"));
         campoNome.clear();
         String novoNome = "Editado " + nomeOriginal;
         campoNome.sendKeys(novoNome);
 
+        // === Salvar as alterações ===
         botaoSalvar = driver.findElement(By.cssSelector("button[type='submit']"));
         botaoSalvar.click();
 
@@ -96,7 +98,7 @@ public class ContatoTest {
     public void deveRemoverContato() {
         driver.get("https://projeto2-seven-sandy.vercel.app/");
 
-        // Cadastrar contato
+        // === Cadastro de contato ===
         WebElement nome = driver.findElement(By.id("name"));
         WebElement email = driver.findElement(By.id("email"));
         WebElement telefone = driver.findElement(By.id("phone"));
@@ -113,61 +115,62 @@ public class ContatoTest {
 
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("success-message"), "sucesso"));
 
-        // Ir para a tela de contatos
+        // === Navegar para tela de contatos ===
         driver.findElement(By.linkText("Ver contatos cadastrados")).click();
 
-        // Remover o primeiro contato
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Remover']"))).click();
+        // === Remover o contato ===
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//button[text()='Remover']")
+        )).click();
 
-        // Confirma que foi removido (verifica se há zero contatos ou aguarda mudança na tela)
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//strong[contains(text(), '" + nomeFalso + "')]")));
+        // === Verifica se sumiu da tela ===
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+            By.xpath("//strong[contains(text(), '" + nomeFalso + "')]")
+        ));
     }
 
     @Test
-public void naoDeveEditarComCamposVazios() {
-    driver.get("https://projeto2-seven-sandy.vercel.app/");
+    public void naoDeveEditarComCamposVazios() {
+        driver.get("https://projeto2-seven-sandy.vercel.app/");
 
-    // Cadastrar um contato
-    WebElement nome = driver.findElement(By.id("name"));
-    WebElement email = driver.findElement(By.id("email"));
-    WebElement telefone = driver.findElement(By.id("phone"));
-    WebElement botaoSalvar = driver.findElement(By.cssSelector("button[type='submit']"));
+        // === Cadastro de contato ===
+        WebElement nome = driver.findElement(By.id("name"));
+        WebElement email = driver.findElement(By.id("email"));
+        WebElement telefone = driver.findElement(By.id("phone"));
+        WebElement botaoSalvar = driver.findElement(By.cssSelector("button[type='submit']"));
 
-    nome.sendKeys("Teste Edição");
-    email.sendKeys("teste@email.com");
-    telefone.sendKeys("11999999999");
-    botaoSalvar.click();
+        nome.sendKeys("Teste Edição");
+        email.sendKeys("teste@email.com");
+        telefone.sendKeys("11999999999");
+        botaoSalvar.click();
 
-    wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("success-message"), "sucesso"));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("success-message"), "sucesso"));
 
-    // Ir para a tela de contatos
-    driver.findElement(By.linkText("Ver contatos cadastrados")).click();
+        // === Acessar lista de contatos ===
+        driver.findElement(By.linkText("Ver contatos cadastrados")).click();
 
-    try {
-    Thread.sleep(1000);
-} catch (InterruptedException e) {
-    e.printStackTrace();
-}
+        try {
+            Thread.sleep(1000); // tempo de renderização
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        // === Clicar no botão Editar ===
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//div[@class='contact-buttons']/button[contains(text(), 'Editar')]")
+        )).click();
 
-    // Clicar em editar
-wait.until(ExpectedConditions.presenceOfElementLocated(
-    By.xpath("//button[contains(@onclick, 'editContact')]")
-)).click();
+        // === Limpar campos ===
+        driver.findElement(By.id("name")).clear();
+        driver.findElement(By.id("email")).clear();
+        driver.findElement(By.id("phone")).clear();
 
+        // === Tentar salvar com campos vazios ===
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
 
-    // Limpar todos os campos
-    driver.findElement(By.id("name")).clear();
-    driver.findElement(By.id("email")).clear();
-    driver.findElement(By.id("phone")).clear();
-
-    // Tentar salvar
-    driver.findElement(By.cssSelector("button[type='submit']")).click();
-
-    // Verificar se o alerta foi exibido
-    Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-    Assertions.assertTrue(alert.getText().contains("Preencha todos os campos!"));
-    alert.accept();
-}
-
+        // === Verificar alerta ===
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        Assertions.assertTrue(alert.getText().contains("Preencha todos os campos!"));
+        alert.accept();
+    }
 }
