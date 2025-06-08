@@ -36,20 +36,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.editContact = function(index) {
-        const contact = getContacts()[index];
-        nameInput.value = contact.name;
-        emailInput.value = contact.email;
-        phoneInput.value = contact.phone;
-        contactIdInput.value = index;
+        const contacts = getContacts();
+        const contact = contacts[index];
+
+        localStorage.setItem('editIndex', index);
+        window.location.href = 'index.html';
     };
 
     window.deleteContact = function(index) {
         const contacts = getContacts();
         contacts.splice(index, 1);
         saveContacts(contacts);
-        renderContacts();
         alert('Contato removido com sucesso!');
+        location.reload();
     };
+
+    // 🟨 Ao carregar a página de cadastro, verificar se está em modo de edição
+    const editIndex = localStorage.getItem('editIndex');
+    if (editIndex !== null) {
+        const contacts = getContacts();
+        const contact = contacts[editIndex];
+
+        nameInput.value = contact.name;
+        emailInput.value = contact.email;
+        phoneInput.value = contact.phone;
+        contactIdInput.value = editIndex;
+
+        localStorage.removeItem('editIndex'); // limpar para evitar edições indesejadas
+    }
 
     if (form) {
         form.addEventListener('submit', (e) => {
@@ -69,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 contacts.push({ name, email, phone });
             }
             saveContacts(contacts);
-            renderContacts();
             form.reset();
             if (successMessage) {
                 successMessage.textContent = 'Contato salvo com sucesso!';
