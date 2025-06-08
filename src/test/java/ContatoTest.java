@@ -157,8 +157,10 @@ public class ContatoTest {
 
         // === Clicar no botão Editar ===
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//div[@class='contact-buttons']/button[contains(text(), 'Editar')]")
+            By.xpath("//button[contains(text(), 'Editar')]")
         )).click();
+
+        
 
         // === Limpar campos ===
         driver.findElement(By.id("name")).clear();
